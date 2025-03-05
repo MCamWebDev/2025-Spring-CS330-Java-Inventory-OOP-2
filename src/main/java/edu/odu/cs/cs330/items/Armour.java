@@ -17,7 +17,7 @@ public class Armour extends Item {
     /**
      * The amount of damage that can be negated.
      */
-    protected int  defense;
+    protected int defense;
 
     /**
      * Base material out of which the armour is constructed.
@@ -46,7 +46,13 @@ public class Armour extends Item {
      */
     public Armour()
     {
-
+        super("");
+        this.durability = 0;
+        this.defense = 0;
+        this.material = "";
+        this.modifier = "";
+        this.modifierLevel = 0;
+        this.element = "";
     }
 
     /**
@@ -56,7 +62,13 @@ public class Armour extends Item {
      */
     public Armour(Armour src)
     {
-
+        super(src.name);
+        this.durability = src.durability;
+        this.defense = src.defense;
+        this.material = src.material;
+        this.modifier = src.modifier;
+        this.modifierLevel = src.modifierLevel;
+        this.element = src.element;
     }
 
     /**
@@ -191,7 +203,15 @@ public class Armour extends Item {
     @Override
     public void read(Scanner snr)
     {
-
+        super.name   = snr.next();
+    
+        // Complete this method
+        material = snr.next();
+        durability = Integer.parseInt(snr.next());
+        defense = Integer.parseInt(snr.next());
+        modifier = snr.next();
+        modifierLevel = Integer.parseInt(snr.next());
+        element = snr.next();
     }
 
     /**
@@ -219,7 +239,15 @@ public class Armour extends Item {
         Armour rhsItem = (Armour) rhs;
 
         // Replace the next line
-        return false;
+        if (!this.name.equals(rhsItem.name)) {return false;}
+        if (!this.material.equals(rhsItem.material)) {return false;}
+        //if (this.durability != rhsItem.durability) {return false;}
+        //if (this.defense != rhsItem.defense) {return false;}
+        if (!this.modifier.equals(rhsItem.modifier)) {return false;}
+        //if (this.modifierLevel != rhsItem.modifierLevel) {return false;}
+        if (!this.element.equals(rhsItem.element)) {return false;}
+
+        return true;
     }
 
     /**
@@ -229,7 +257,10 @@ public class Armour extends Item {
     @Override
     public int hashCode()
     {
-        return -1;
+        return this.name.hashCode()
+             + this.material.hashCode()
+             + this.modifier.hashCode()
+             + this.element.hashCode();
     }
 
     /**
@@ -238,7 +269,15 @@ public class Armour extends Item {
     @Override
     public String toString()
     {
-        return "";
+        StringBuilder strBld = new StringBuilder();
+        strBld.append(String.format("  Nme: %s\n", this.name));
+        strBld.append(String.format("  Dur: %d\n", this.durability));
+        strBld.append(String.format("  Def: %d\n", this.defense));
+        strBld.append(String.format("  Mtl: %s\n", this.material));
+        strBld.append(String.format("  Mdr: %s (Lvl %d)\n", this.modifier, this.modifierLevel));
+        strBld.append(String.format("  Emt: %s\n", this.element));
+
+        return strBld.toString();
     }
 }
 
